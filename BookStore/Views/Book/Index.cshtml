@@ -1,0 +1,118 @@
+﻿@model IEnumerable<BookStore.Common.Dto.BookDtos.BookDto>
+
+<h2>Book List</h2>
+
+<input type="text" id="searchBar" class="form-control" placeholder="Search for books..." onkeyup="searchBooks()">
+<br />
+
+<table class="table" id="bookTable">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Publish Date</th>
+            <th>ISBN</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="bookTableBody">
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.title</td>
+                <td>@book.author</td>
+                <td>@book.price</td>
+                <td>@book.publishDate.ToShortDateString()</td>
+                <td>@book.ISBN</td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = book.Id })">Details</a> |
+                    <a href="@Url.Action("Edit", new { id = book.Id })">Edit</a> |
+                    <a href="@Url.Action("Delete", new { id = book.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination" id="paginationControls">
+    </ul>
+</nav>
+
+<a href="@Url.Action("Create")" class="btn btn-primary">Add New Book</a>
+
+<script>
+    const rowsPerPage = 5;
+    let currentPage = 1;
+    let table = document.getElementById('bookTable');
+    let tr = table.getElementsByTagName('tr');
+    let totalRows = tr.length - 1; // excluding the header row
+
+    function displayRows() {
+        let start = (currentPage - 1) * rowsPerPage + 1;
+        let end = currentPage * rowsPerPage;
+
+        for (let i = 1; i < tr.length; i++) { // skip the header row
+            if (i >= start && i <= end) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
+
+    function setupPagination() {
+        let pageCount = Math.ceil(totalRows / rowsPerPage);
+        let paginationControls = document.getElementById('paginationControls');
+        paginationControls.innerHTML = ''; // Clear any previous controls
+
+        for (let i = 1; i <= pageCount; i++) {
+            let li = document.createElement('li');
+            li.className = 'page-item';
+            let a = document.createElement('a');
+            a.className = 'page-link';
+            a.innerHTML = i;
+            a.onclick = function () {
+                currentPage = i;
+                displayRows();
+                updateActivePage(i);
+            };
+            li.appendChild(a);
+            paginationControls.appendChild(li);
+        }
+    }
+
+    function updateActivePage(pageNumber) {
+        let pageLinks = document.querySelectorAll('.pagination li a');
+        pageLinks.forEach(link => link.parentNode.classList.remove('active'));
+        pageLinks[pageNumber - 1].parentNode.classList.add('active');
+    }
+
+    function searchBooks() {
+        var input = document.getElementById('searchBar');
+        var filter = input.value.toLowerCase();
+        var tr = table.getElementsByTagName('tr');
+
+        for (var i = 1; i < tr.length; i++) {
+            var tdTitle = tr[i].getElementsByTagName('td')[0];
+            var tdAuthor = tr[i].getElementsByTagName('td')[1];
+            if (tdTitle || tdAuthor) {
+                var titleValue = tdTitle.textContent || tdTitle.innerText;
+                var authorValue = tdAuthor.textContent || tdAuthor.innerText;
+
+                if (titleValue.toLowerCase().indexOf(filter) > -1 || authorValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
+                }
+            }
+        }
+    }
+
+    window.onload = function () {
+        setupPagination();
+        displayRows();
+        updateActivePage(1);
+    };
+</script>

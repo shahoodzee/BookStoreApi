@@ -1,0 +1,29 @@
+﻿@model BookStore.Common.Dto.BookDtos.UpdateBookDto
+
+<h2>Edit Book</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input asp-for="title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input asp-for="author" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input asp-for="price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="publishDate">Publish Date</label>
+        <input asp-for="publishDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="ISBN">ISBN</label>
+        <input asp-for="ISBN" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>

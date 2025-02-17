@@ -1,0 +1,41 @@
+﻿@model BookStore.Common.Dto.BookDtos.CreateBookDto
+
+<h2>Create New Book</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="title"></label>
+        <input asp-for="title" class="form-control" />
+        <span asp-validation-for="title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="author"></label>
+        <input asp-for="author" class="form-control" />
+        <span asp-validation-for="author" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="price"></label>
+        <input asp-for="price" class="form-control" />
+        <span asp-validation-for="price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="publishDate"></label>
+        <input asp-for="publishDate" class="form-control" />
+        <span asp-validation-for="publishDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ISBN"></label>
+        <input asp-for="ISBN" class="form-control" />
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

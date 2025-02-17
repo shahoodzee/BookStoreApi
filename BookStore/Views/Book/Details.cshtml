@@ -1,0 +1,30 @@
+﻿@model BookStore.Common.Dto.BookDtos.FetchBookDto
+
+<h2>Book Details</h2>
+
+<div class="card">
+    <div class="card-header">
+        <h4>@Model.title</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">@Model.title</dd>
+
+            <dt class="col-sm-3">Author</dt>
+            <dd class="col-sm-9">@Model.author</dd>
+
+            <dt class="col-sm-3">Price</dt>
+            <dd class="col-sm-9">$@Model.price.ToString("F2")</dd>
+
+            <dt class="col-sm-3">Publish Date</dt>
+            <dd class="col-sm-9">@Model.publishDate.ToShortDateString()</dd>
+
+            <dt class="col-sm-3">ISBN</dt>
+            <dd class="col-sm-9">@Model.ISBN</dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <a href="@Url.Action("Index")" class="btn btn-primary">Back to List</a>
+    </div>
+</div>
